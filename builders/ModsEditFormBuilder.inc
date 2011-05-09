@@ -126,7 +126,12 @@ class ModsEditFormBuilder implements FormBuilderInterface {
     list($class) = $this->loadDocumentClass($content_model);
     $document = new $class($form, $this->formState);
     $this->modifyDatastream($document, "{$this->dsid}", "{$this->dsid} Record", 'text/xml');
-    $transform = drupal_get_path('module', 'islandora_form_builder') . '/transforms/mods_to_dc.xsl'; // TODO add transform to content modeler ...
+        if ($this->dsid == "MODS"){
+            $transform = drupal_get_path('module', 'islandora_form_builder') . '/transforms/mods_to_dc.xsl'; // TODO add transform to content modeler ...
+    }
+        if ($this->dsid == "PBCORE"){
+            $transform = drupal_get_path('module', 'islandora_form_builder') . '/transforms/pbcore_to_dc.xsl'; // TODO add transform to content modeler ...
+    }
     $dublin_core = $this->transformDocumentIntoDublinCore($document, $transform);
     $dublin_core->version = "1.0";
     $dublin_core->encoding = "UTF-8";
